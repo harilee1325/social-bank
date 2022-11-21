@@ -17,16 +17,28 @@ public class Comments {
     private String user_id;
 
     @Column
+    private String username;
+
+    @Column
     private String date;
 
     public Comments() {
     }
 
-    public Comments(String comment, String user_id, String date) {
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Comments(String comment, String user_id, String date, String username) {
         super();
         this.comment = comment;
         this.user_id = user_id;
         this.date = date;
+        this.username = username;
     }
 
     public Integer getId() {

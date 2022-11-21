@@ -68,9 +68,13 @@ public class Controller {
     @PostMapping("/add_comment")
     public String createComment(@RequestBody CommentView commentView) {
         logger.info("Creating comment {}", commentView.getComment());
+        Users acc = services.getUsers(Integer.parseInt(commentView.getUserId()));
+
         Comments comments = new Comments();
         comments.setComment(commentView.getComment());
         comments.setUser_id(commentView.getUserId());
+        comments.setUsername(acc.getUsername());
+
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
 

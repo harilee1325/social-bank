@@ -1,5 +1,6 @@
 package com.example.social_bank.demo.user;
 
+import com.example.social_bank.demo.account.Accounts;
 import com.example.social_bank.demo.util.JpaConn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,5 +54,18 @@ public class UserDao {
             logger.info("email not found");
             return null;
         }
+    }
+
+    public Users getUser(int user_id) {
+
+        try {
+            Users users = (Users) conn.getEntityManager()
+                    .createQuery("from Users where id=:id")
+                    .setParameter("id", user_id).getSingleResult();
+            return users;
+        }catch (NoResultException noResultException){
+            return null;
+        }
+
     }
 }

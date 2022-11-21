@@ -101,6 +101,9 @@ public class Services {
     public Accounts getAccounts(int id) {
         return accountsDao.getAccount(id);
     }
+    public Users getUsers(int id) {
+        return dao.getUser(id);
+    }
 
     public boolean createAccount(Accounts accounts) {
         try {
