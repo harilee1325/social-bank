@@ -173,6 +173,17 @@ public class Controller {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:3001")
+    @GetMapping("/services/{user_id}")
+    public ResponseEntity getServices(@PathVariable("user_id") int user_id) {
+        try{
+            List<UserServices> servicesTables = services.getServices(user_id);
+            return new ResponseEntity(servicesTables, HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity(new ErrorView("Error"), HttpStatus.FORBIDDEN);
+        }
+    }
+
     @PostMapping("/create_service")
     public String createService(@RequestBody UserServiceView userView) {
         logger.info("Creating service {}", userView.getServiceId());

@@ -6,11 +6,14 @@ import com.example.social_bank.demo.util.JpaConn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
+import java.util.ArrayList;
 import java.util.List;
 
+@Component("complaintDao")
 public class ComplaintsDao {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -30,9 +33,17 @@ public class ComplaintsDao {
 
         try {
            List<Complaints> comments = (List<Complaints>) conn.getEntityManager()
-                    .createQuery("from Complaints where user_id=:user_id")
-                    .setParameter("user_id", user_id).getResultList();
-            return comments;
+                    .createQuery("from Complaints").getResultList();
+
+           List<Complaints> complaints = new ArrayList<>();
+
+           for (int i =0;i<comments.size();i++){
+               if (comments.get(i).getUser_id().contains(String.valueOf(user_id))){
+                   complaints.add(comments.get(i));
+               }
+           }
+
+            return complaints;
         }catch (NoResultException noResultException){
             return null;
         }

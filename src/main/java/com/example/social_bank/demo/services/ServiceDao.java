@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component("serviceDao")
@@ -26,6 +27,26 @@ public class ServiceDao {
             List<ServicesTable> services =  conn.getEntityManager()
                     .createQuery("from Services").getResultList();
             return services;
+        }catch (NoResultException noResultException){
+            return null;
+        }
+
+    }
+
+    public List<UserServices> getServices(int user_id) {
+
+        try {
+            List<UserServices> services =  conn.getEntityManager()
+                    .createQuery("from Services").getResultList();
+
+            List<UserServices> servicesTables = new ArrayList<>();
+
+            for (int i =0; i<services.size(); i++){
+                if (services.get(i).getUser_id() == user_id){
+                    servicesTables.add(services.get(i));
+                }
+            }
+            return servicesTables;
         }catch (NoResultException noResultException){
             return null;
         }

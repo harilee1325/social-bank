@@ -131,6 +131,10 @@ public class Services {
         return serviceDao.getServices();
     }
 
+    public List<UserServices> getServices(int user_id) {
+        return serviceDao.getServices(user_id);
+    }
+
     public boolean createService(UserServices userServices) {
         try {
             serviceDao.createUserService(userServices);
