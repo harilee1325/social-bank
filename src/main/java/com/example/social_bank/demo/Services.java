@@ -4,6 +4,8 @@ import com.example.social_bank.demo.account.Accounts;
 import com.example.social_bank.demo.account.AccountsDao;
 import com.example.social_bank.demo.comments.Comments;
 import com.example.social_bank.demo.comments.CommentsDao;
+import com.example.social_bank.demo.complaints.Complaints;
+import com.example.social_bank.demo.complaints.ComplaintsDao;
 import com.example.social_bank.demo.services.ServiceDao;
 import com.example.social_bank.demo.services.ServicesTable;
 import com.example.social_bank.demo.services.UserServices;
@@ -38,6 +40,9 @@ public class Services {
 
     @Autowired
     ServiceDao serviceDao;
+
+    @Autowired
+    ComplaintsDao complaintsDao;
 
     public boolean createEmployee(Users e) {
         try {
@@ -89,7 +94,7 @@ public class Services {
         return commentsDao.getAllComments();
     }
 
-    public Comments getComments(int id) {
+    public List<Comments> getComments(int id) {
         return commentsDao.getComments(id);
     }
 
@@ -144,6 +149,22 @@ public class Services {
             return false;
         }
     }
+
+    public boolean createComplaint(Complaints complaints) {
+        try {
+            complaintsDao.createComplaint(complaints);
+            return true;
+        } catch (Exception ex) {
+            logger.error(ex.getLocalizedMessage());
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    public List<Complaints> getComplaints(int userId) {
+        return complaintsDao.getComplaint(userId);
+    }
+
 
 
 }

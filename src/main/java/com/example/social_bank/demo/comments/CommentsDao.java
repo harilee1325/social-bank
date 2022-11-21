@@ -27,10 +27,10 @@ public class CommentsDao {
         return "done";
     }
 
-    public Comments getComments(int user_id) {
+    public List<Comments> getComments(int user_id) {
 
         try {
-            Comments comments = (Comments) conn.getEntityManager()
+            List<Comments> comments = (List<Comments>) conn.getEntityManager()
                     .createQuery("from Comments where user_id=:user_id")
                     .setParameter("user_id", user_id).getSingleResult();
             return comments;
@@ -43,7 +43,7 @@ public class CommentsDao {
 
         try {
             List<Comments> comments =  conn.getEntityManager()
-                    .createQuery("from Accounts").getResultList();
+                    .createQuery("from Comments").getResultList();
             return comments;
         }catch (NoResultException noResultException){
             return null;

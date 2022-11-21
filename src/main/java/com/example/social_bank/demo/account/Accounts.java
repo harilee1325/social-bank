@@ -27,15 +27,27 @@ public class Accounts {
     @Column()
     private int debit_card_number;
 
+    @Column()
+    private int cvv;
+
+    @Column()
+    private String exp;
+
+    @Column()
+    private String name;
+
     public Accounts() {
 
     }
 
-    public Accounts(Double balance, int user_id, int debit_card_number) {
+    public Accounts(Double balance, int user_id, int debit_card_number, int cvv, String exp, String name) {
         super();
         this.balance = balance;
         this.user_id = user_id;
         this.debit_card_number = debit_card_number;
+        this.cvv = cvv;
+        this.exp = exp;
+        this.name = name;
     }
 
     public Double getBalance() {
@@ -60,5 +72,29 @@ public class Accounts {
 
     public void setDebit_card_number(int debit_card_number) {
         this.debit_card_number = debit_card_number;
+    }
+
+    public int getCvv() {
+        return cvv;
+    }
+
+    public void setCvv(int cvv) {
+        this.cvv = cvv;
+    }
+
+    public String getExp() {
+        return exp;
+    }
+
+    public void setExp(String exp) {
+        this.exp = exp;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

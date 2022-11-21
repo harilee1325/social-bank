@@ -6,6 +6,8 @@ import com.example.social_bank.demo.account.Accounts;
 import com.example.social_bank.demo.comments.CommentView;
 import com.example.social_bank.demo.comments.Comments;
 import com.example.social_bank.demo.comments.CommentsDao;
+import com.example.social_bank.demo.complaints.ComplaintView;
+import com.example.social_bank.demo.complaints.Complaints;
 import com.example.social_bank.demo.services.ServicesTable;
 import com.example.social_bank.demo.services.UserServiceView;
 import com.example.social_bank.demo.services.UserServices;
@@ -96,7 +98,7 @@ public class Controller {
     @GetMapping("/all_comments/{user_id}")
     public ResponseEntity getAllComments(@PathVariable("user_id") int userId) {
         try{
-            Comments comments = services.getComments(userId);
+            List<Comments> comments = services.getComments(userId);
             return new ResponseEntity(comments, HttpStatus.OK);
         }catch(Exception e){
             return new ResponseEntity(new ErrorView("Error"), HttpStatus.FORBIDDEN);
@@ -112,6 +114,9 @@ public class Controller {
         Accounts accounts = new Accounts();
         accounts.setUser_id(Integer.parseInt((accountView.getUserId())));
         accounts.setDebit_card_number(Integer.parseInt((accountView.getDebitCard())));
+        accounts.setExp(((accountView.getExp())));
+        accounts.setCvv(Integer.parseInt((accountView.getCvv())));
+        accounts.setName(((accountView.getName())));
 
         if (acc!=null){
             accounts.setBalance(acc.getBalance()+Double.parseDouble(accountView.getBalance()));
@@ -147,7 +152,7 @@ public class Controller {
 
             Accounts acc = services.getAccounts((id));
 
-            return new ResponseEntity(new AccountView(String.valueOf(acc.getBalance()), String.valueOf(acc.getUser_id()), String.valueOf(acc.getDebit_card_number())), HttpStatus.OK);
+            return new ResponseEntity(new AccountView(String.valueOf(acc.getBalance()), String.valueOf(acc.getUser_id()), String.valueOf(acc.getDebit_card_number()), String.valueOf(acc.getExp()), String.valueOf(acc.getName()), String.valueOf(acc.getCvv())), HttpStatus.OK);
         }catch(Exception e){
             return new ResponseEntity(new ErrorView("Error"), HttpStatus.FORBIDDEN);
         }
@@ -178,4 +183,35 @@ public class Controller {
     }
 
 
+    @PostMapping("/add_complaint")
+    public String createComplaint(@RequestBody ComplaintView complaintView) {
+        logger.info("Creating complaint {}", complaintView.getComplaint());
+        Complaints complaints = new Complaints();
+        complaints.setComplaint(complaintView.getComplaint());
+        complaints.setUser_id(complaintView.getUserId());
+        complaints.setStatus(complaintView.getStatus());
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+
+        String date = dtf.format(now);
+        complaints.setDate(date);
+
+        if (services.createComplaint(complaints)) {
+            return "redirect:create?success=true";
+        }
+        return "redirect:create?error=true";
+    }
+
+    @GetMapping("/get_complaint/{user_id}")
+    public ResponseEntity getComplaint(@PathVariable("user_id") int id) {
+        try{
+
+            List<Complaints> complaints = services.getComplaints((id));
+
+            return new ResponseEntity(complaints, HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity(new ErrorView("Error"), HttpStatus.FORBIDDEN);
+        }
+    }
 }
