@@ -73,7 +73,7 @@ public class Controller {
         Comments comments = new Comments();
         comments.setComment(commentView.getComment());
         comments.setUser_id(commentView.getUserId());
-        comments.setUsername(acc.getUsername());
+        comments.setUsername(acc.getName());
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
@@ -180,6 +180,7 @@ public class Controller {
         userServices.setService_id(Integer.valueOf(userView.getServiceId()));
         userServices.setUser_id(Integer.parseInt(userView.getUserId()));
         userServices.setStatus(userView.getStatus());
+
         if (services.createService(userServices)) {
             return "redirect:create?success=true";
         }

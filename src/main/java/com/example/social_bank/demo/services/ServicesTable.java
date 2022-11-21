@@ -13,9 +13,26 @@ public class ServicesTable {
     @Column
     private String service_name;
 
-    public ServicesTable(String service_name) {
-        super();
-        this.service_name = service_name;
+    @Column
+    private String desc;
+
+    @Column
+    private String type_id;
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public String getType_id() {
+        return type_id;
+    }
+
+    public void setType_id(String type_id) {
+        this.type_id = type_id;
     }
 
     public ServicesTable() {

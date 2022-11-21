@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
+import java.util.List;
 
 @Component("userDao")
 
@@ -59,10 +60,17 @@ public class UserDao {
     public Users getUser(int user_id) {
 
         try {
-            Users users = (Users) conn.getEntityManager()
-                    .createQuery("from Users where id=:id")
-                    .setParameter("id", user_id).getSingleResult();
-            return users;
+            List<Users> users = (List<Users>) conn.getEntityManager()
+                    .createQuery("from Users").getResultList();
+
+            Users users1 = null;
+            for (int i =0;i<users.size();i++){
+                if (users.get(i).getId() == user_id){
+                    users1 = users.get(i);
+                    break;
+                }
+            }
+            return users1;
         }catch (NoResultException noResultException){
             return null;
         }

@@ -6,6 +6,8 @@ public class UserServiceView {
     private String serviceId;
     private String status;
 
+    private String typeId;
+
     public UserServiceView(String userId, String serviceId, String status) {
         this.userId = userId;
         this.serviceId = serviceId;
