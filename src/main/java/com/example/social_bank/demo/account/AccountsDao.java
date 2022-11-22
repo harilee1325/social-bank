@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
+import java.util.List;
 
 @Component("accountDao")
 
@@ -35,6 +36,18 @@ public class AccountsDao {
                     .createQuery("from Accounts where user_id=:user_id")
                     .setParameter("user_id", user_id).getSingleResult();
             return accounts;
+        }catch (NoResultException noResultException){
+            return null;
+        }
+
+    }
+
+    public List<Transaction> getTransaction() {
+
+        try {
+            List<Transaction> transactions = ( List<Transaction>) conn.getEntityManager()
+                    .createQuery("from Transaction").getResultList();
+            return transactions;
         }catch (NoResultException noResultException){
             return null;
         }

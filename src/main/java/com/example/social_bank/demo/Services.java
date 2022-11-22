@@ -2,6 +2,7 @@ package com.example.social_bank.demo;
 
 import com.example.social_bank.demo.account.Accounts;
 import com.example.social_bank.demo.account.AccountsDao;
+import com.example.social_bank.demo.account.Transaction;
 import com.example.social_bank.demo.comments.Comments;
 import com.example.social_bank.demo.comments.CommentsDao;
 import com.example.social_bank.demo.complaints.Complaints;
@@ -99,6 +100,10 @@ public class Services {
 
     public Accounts getAccounts(int id) {
         return accountsDao.getAccount(id);
+    }
+
+    public List<Transaction> getTransaction() {
+        return accountsDao.getTransaction();
     }
     public Users getUsers(int id) {
         return dao.getUser(id);

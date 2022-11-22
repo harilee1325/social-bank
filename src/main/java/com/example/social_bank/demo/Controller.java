@@ -3,6 +3,7 @@ package com.example.social_bank.demo;
 
 import com.example.social_bank.demo.account.AccountView;
 import com.example.social_bank.demo.account.Accounts;
+import com.example.social_bank.demo.account.Transaction;
 import com.example.social_bank.demo.comments.CommentView;
 import com.example.social_bank.demo.comments.Comments;
 import com.example.social_bank.demo.complaints.ComplaintView;
@@ -108,6 +109,17 @@ public class Controller {
         try{
             List<Comments> comments = services.getComments(userId);
             return new ResponseEntity(comments, HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity(new ErrorView("Error"), HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:3001")
+    @GetMapping("/all_transaction")
+    public ResponseEntity getTransaction() {
+        try{
+            List<Transaction> transactions = services.getTransaction();
+            return new ResponseEntity(transactions, HttpStatus.OK);
         }catch(Exception e){
             return new ResponseEntity(new ErrorView("Error"), HttpStatus.FORBIDDEN);
         }
