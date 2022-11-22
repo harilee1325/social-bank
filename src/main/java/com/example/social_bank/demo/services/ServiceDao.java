@@ -25,7 +25,7 @@ public class ServiceDao {
 
         try {
             List<ServicesTable> services =  conn.getEntityManager()
-                    .createQuery("from Services").getResultList();
+                    .createQuery("from ServicesTable").getResultList();
             return services;
         }catch (NoResultException noResultException){
             return null;
@@ -37,7 +37,7 @@ public class ServiceDao {
 
         try {
             List<UserServices> services =  conn.getEntityManager()
-                    .createQuery("from Services").getResultList();
+                    .createQuery("from UserServices").getResultList();
 
             List<UserServices> servicesTables = new ArrayList<>();
 
@@ -68,5 +68,13 @@ public class ServiceDao {
         conn.getEntityManager().merge(e);
         conn.getEntityManager().flush();
         txn.commit();
+    }
+
+    public String createService(ServicesTable userServices) {
+        EntityTransaction txn = conn.getEntityManager().getTransaction();
+        txn.begin();
+        conn.getEntityManager().persist(userServices);
+        txn.commit();
+        return "done";
     }
 }

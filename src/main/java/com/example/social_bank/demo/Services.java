@@ -11,7 +11,6 @@ import com.example.social_bank.demo.services.ServicesTable;
 import com.example.social_bank.demo.services.UserServices;
 import com.example.social_bank.demo.user.UserDao;
 import com.example.social_bank.demo.user.Users;
-import org.apache.catalina.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -173,6 +172,17 @@ public class Services {
     }
 
 
+    public boolean createService(ServicesTable userServices) {
 
+        try {
+
+            serviceDao.createService(userServices);
+            return true;
+        } catch (Exception ex) {
+            logger.error(ex.getLocalizedMessage());
+            ex.printStackTrace();
+            return false;
+        }
+    }
 }
 

@@ -5,14 +5,13 @@ import com.example.social_bank.demo.account.AccountView;
 import com.example.social_bank.demo.account.Accounts;
 import com.example.social_bank.demo.comments.CommentView;
 import com.example.social_bank.demo.comments.Comments;
-import com.example.social_bank.demo.comments.CommentsDao;
 import com.example.social_bank.demo.complaints.ComplaintView;
 import com.example.social_bank.demo.complaints.Complaints;
+import com.example.social_bank.demo.services.ServiceView;
 import com.example.social_bank.demo.services.ServicesTable;
 import com.example.social_bank.demo.services.UserServiceView;
 import com.example.social_bank.demo.services.UserServices;
 import com.example.social_bank.demo.user.LoginView;
-import com.example.social_bank.demo.user.UserDao;
 import com.example.social_bank.demo.user.UserView;
 import com.example.social_bank.demo.user.Users;
 import com.example.social_bank.demo.util.ErrorView;
@@ -25,12 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
-
-import static java.lang.Math.ceil;
-import static java.lang.Math.log;
 
 @org.springframework.stereotype.Controller
 @RestController
@@ -150,6 +144,7 @@ public class Controller {
 
     }
 
+    @CrossOrigin(origins = "http://localhost:3001")
     @GetMapping("/get_account/{user_id}")
     public ResponseEntity getSpecificAccount(@PathVariable("user_id") int id) {
         try{
@@ -184,6 +179,22 @@ public class Controller {
         }
     }
 
+
+    @CrossOrigin(origins = "http://localhost:3001")
+    @PostMapping("/make_service")
+    public String makeService(@RequestBody ServiceView serviceView) {
+        logger.info("Creating service {}", serviceView.getDesc());
+        ServicesTable userServices = new ServicesTable();
+        userServices.setService_name(serviceView.getName());
+        userServices.setDesc(serviceView.getDesc());
+
+        if (services.createService(userServices)) {
+            return "redirect:create?success=true";
+        }
+        return "redirect:create?error=true";
+    }
+
+    @CrossOrigin(origins = "http://localhost:3001")
     @PostMapping("/create_service")
     public String createService(@RequestBody UserServiceView userView) {
         logger.info("Creating service {}", userView.getServiceId());
@@ -198,6 +209,8 @@ public class Controller {
         return "redirect:create?error=true";
     }
 
+
+    @CrossOrigin(origins = "http://localhost:3001")
 
     @PostMapping("/add_complaint")
     public String createComplaint(@RequestBody ComplaintView complaintView) {
@@ -219,6 +232,7 @@ public class Controller {
         return "redirect:create?error=true";
     }
 
+    @CrossOrigin(origins = "http://localhost:3001")
     @GetMapping("/get_complaint/{user_id}")
     public ResponseEntity getComplaint(@PathVariable("user_id") int id) {
         try{

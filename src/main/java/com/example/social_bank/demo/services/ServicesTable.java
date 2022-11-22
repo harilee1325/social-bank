@@ -14,16 +14,20 @@ public class ServicesTable {
     private String service_name;
 
     @Column
-    private String desc;
+    private String description;
 
-
+    public ServicesTable(String service_name, String desc) {
+        super();
+        this.service_name = service_name;
+        this.description = desc;
+    }
 
     public String getDesc() {
-        return desc;
+        return description;
     }
 
     public void setDesc(String desc) {
-        this.desc = desc;
+        this.description = desc;
     }
 
     public ServicesTable() {
