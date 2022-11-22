@@ -12,6 +12,16 @@ public class UserView {
 
     private String username;
 
+    private String creditCard;
+
+    public String getCreditCard() {
+        return creditCard;
+    }
+
+    public void setCreditCard(String creditCard) {
+        this.creditCard = creditCard;
+    }
+
     public String getMobile_number() {
         return mobile_number;
     }

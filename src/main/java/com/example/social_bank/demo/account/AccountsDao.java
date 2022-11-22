@@ -50,4 +50,34 @@ public class AccountsDao {
         txn.commit();
     }
 
+    public Accounts getAccountWithDebitCard(String cardNo) {
+
+        try {
+            Accounts accounts = (Accounts) conn.getEntityManager()
+                    .createQuery("from Accounts where credit_card_number=:credit_card_number")
+                    .setParameter("credit_card_number", cardNo).getSingleResult();
+            return accounts;
+        }catch (NoResultException noResultException){
+            return null;
+        }
+
+    }
+
+
+    public void updateUserId(int userId, String creditCard) throws  Exception{
+
+        try {
+            EntityTransaction txn = conn.getEntityManager().getTransaction();
+            txn.begin();
+            conn.getEntityManager()
+                    .createQuery("update Accounts set user_id=:user_id where credit_card_number=:credit_card_number")
+                    .setParameter("user_id", userId).setParameter("credit_card_number", creditCard).executeUpdate();
+            txn.commit();
+        }catch (NoResultException e){
+
+            System.out.println("No result");
+            return;
+        }
+    }
+
 }

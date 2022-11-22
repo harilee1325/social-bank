@@ -28,7 +28,7 @@ import java.util.List;
 
 @org.springframework.stereotype.Controller
 @RestController
-@RequestMapping(path = "/social_banking")
+@RequestMapping(path = "/api")
 public class Controller {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -45,7 +45,7 @@ public class Controller {
 
 
     @PostMapping("/create")
-    public String createEmployeePost(@RequestBody UserView userView) {
+    public ResponseEntity createEmployeePost(@RequestBody UserView userView) {
         logger.info("Creating user {}", userView.getName());
         Users emp = new Users();
         emp.setEmail(userView.getEmail());
@@ -53,10 +53,22 @@ public class Controller {
         emp.setPassword(userView.getPassword());// hashing in dao
         emp.setMobileNumber(userView.getMobileNumber());
         emp.setUsername(userView.getUsername());
-        if (services.createEmployee(emp)) {
-            return "redirect:create?success=true";
+
+        Accounts accounts = services.getAccountFromCard(userView.getCreditCard());
+
+        if (accounts!=null){
+            if (services.createEmployee(emp)) {
+                Users users = services.getUser(userView.getEmail());
+                services.updateUserId(users.getId(), userView.getCreditCard() );
+                return new ResponseEntity(new ErrorView("Account updated"), HttpStatus.CREATED);
+            }
+        }else{
+            if (services.createEmployee(emp)) {
+                return new ResponseEntity(new ErrorView("Success"), HttpStatus.CREATED);
+            }
         }
-        return "redirect:create?error=true";
+
+        return new ResponseEntity(new ErrorView("Error"), HttpStatus.UNAUTHORIZED);
     }
 
     @PostMapping("/add_comment")
@@ -111,7 +123,7 @@ public class Controller {
         Accounts acc = services.getAccounts(Integer.parseInt(accountView.getUserId()));
         Accounts accounts = new Accounts();
         accounts.setUser_id(Integer.parseInt((accountView.getUserId())));
-        accounts.setDebit_card_number(Integer.parseInt((accountView.getDebitCard())));
+        accounts.setCredit_card_number(((accountView.getCreditCard())));
         accounts.setExp(((accountView.getExp())));
         accounts.setCvv(Integer.parseInt((accountView.getCvv())));
         accounts.setName(((accountView.getName())));
@@ -151,7 +163,7 @@ public class Controller {
 
             Accounts acc = services.getAccounts((id));
 
-            return new ResponseEntity(new AccountView(String.valueOf(acc.getBalance()), String.valueOf(acc.getUser_id()), String.valueOf(acc.getDebit_card_number()), String.valueOf(acc.getExp()), String.valueOf(acc.getName()), String.valueOf(acc.getCvv())), HttpStatus.OK);
+            return new ResponseEntity(new AccountView(String.valueOf(acc.getBalance()), String.valueOf(acc.getUser_id()), String.valueOf(acc.getCredit_card_number()), String.valueOf(acc.getExp()), String.valueOf(acc.getName()), String.valueOf(acc.getCvv())), HttpStatus.OK);
         }catch(Exception e){
             return new ResponseEntity(new ErrorView("Error"), HttpStatus.FORBIDDEN);
         }

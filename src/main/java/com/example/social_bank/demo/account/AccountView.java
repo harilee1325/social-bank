@@ -4,7 +4,7 @@ public class AccountView {
     private String balance;
     private String userId;
 
-    private String debitCard;
+    private String creditCard;
 
     private String exp;
 
@@ -13,10 +13,10 @@ public class AccountView {
     private String cvv;
 
 
-    public AccountView(String balance, String userId, String debitCard, String exp, String name, String cvv) {
+    public AccountView(String balance, String userId, String creditCard, String exp, String name, String cvv) {
         this.balance = balance;
         this.userId = userId;
-        this.debitCard = debitCard;
+        this.creditCard = creditCard;
         this.exp = exp;
         this.name = name;
         this.cvv = cvv;
@@ -65,11 +65,11 @@ public class AccountView {
         this.userId = userId;
     }
 
-    public String getDebitCard() {
-        return debitCard;
+    public String getCreditCard() {
+        return creditCard;
     }
 
-    public void setDebitCard(String debitCard) {
-        this.debitCard = debitCard;
+    public void setCreditCard(String creditCard) {
+        this.creditCard = creditCard;
     }
 }

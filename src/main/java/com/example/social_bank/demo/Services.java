@@ -171,6 +171,9 @@ public class Services {
         return complaintsDao.getComplaint(userId);
     }
 
+    public Accounts getAccountFromCard(String cardNo) {
+        return accountsDao.getAccountWithDebitCard(cardNo);
+    }
 
     public boolean createService(ServicesTable userServices) {
 
@@ -182,6 +185,25 @@ public class Services {
             logger.error(ex.getLocalizedMessage());
             ex.printStackTrace();
             return false;
+        }
+    }
+
+    public Users getUser(String email) {
+        Users user = dao.getUser(email);
+
+        if (user != null) {
+            System.out.println("login success");
+            return user;
+        }
+        return null;
+    }
+
+    public void updateUserId(int userId, String creditCard) {
+        try {
+            accountsDao.updateUserId(userId, creditCard);
+        } catch (Exception ex) {
+            logger.error(ex.getLocalizedMessage());
+            ex.printStackTrace();
         }
     }
 }
