@@ -21,10 +21,10 @@ public class ServiceDao {
     JpaConn conn;
 
 
-    public List<ServicesTable> getServices() {
+    public List<Services_Table> getServices() {
 
         try {
-            List<ServicesTable> services =  conn.getEntityManager()
+            List<Services_Table> services =  conn.getEntityManager()
                     .createQuery("from ServicesTable").getResultList();
             return services;
         }catch (NoResultException noResultException){
@@ -70,10 +70,10 @@ public class ServiceDao {
         txn.commit();
     }
 
-    public String createService(ServicesTable userServices) {
+    public String createService(Services_Table userServices) {
         EntityTransaction txn = conn.getEntityManager().getTransaction();
         txn.begin();
-        conn.getEntityManager().persist(userServices);
+        conn.getEntityManager().merge(userServices);
         txn.commit();
         return "done";
     }

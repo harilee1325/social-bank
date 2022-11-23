@@ -8,7 +8,7 @@ import com.example.social_bank.demo.comments.CommentsDao;
 import com.example.social_bank.demo.complaints.Complaints;
 import com.example.social_bank.demo.complaints.ComplaintsDao;
 import com.example.social_bank.demo.services.ServiceDao;
-import com.example.social_bank.demo.services.ServicesTable;
+import com.example.social_bank.demo.services.Services_Table;
 import com.example.social_bank.demo.services.UserServices;
 import com.example.social_bank.demo.user.UserDao;
 import com.example.social_bank.demo.user.Users;
@@ -131,7 +131,7 @@ public class Services {
         }
     }
 
-    public List<ServicesTable> getServices() {
+    public List<Services_Table> getServices() {
         return serviceDao.getServices();
     }
 
@@ -180,7 +180,7 @@ public class Services {
         return accountsDao.getAccountWithDebitCard(cardNo);
     }
 
-    public boolean createService(ServicesTable userServices) {
+    public boolean createService(Services_Table userServices) {
 
         try {
 

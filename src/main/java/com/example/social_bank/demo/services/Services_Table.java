@@ -3,7 +3,7 @@ package com.example.social_bank.demo.services;
 import javax.persistence.*;
 
 @Entity
-public class ServicesTable {
+public class Services_Table {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,7 +16,7 @@ public class ServicesTable {
     @Column
     private String description;
 
-    public ServicesTable(String service_name, String desc) {
+    public Services_Table(String service_name, String desc) {
         super();
         this.service_name = service_name;
         this.description = desc;
@@ -30,7 +30,7 @@ public class ServicesTable {
         this.description = desc;
     }
 
-    public ServicesTable() {
+    public Services_Table() {
     }
 
     public Integer getId() {

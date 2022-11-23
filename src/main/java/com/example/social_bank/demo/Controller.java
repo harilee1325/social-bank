@@ -9,7 +9,7 @@ import com.example.social_bank.demo.comments.Comments;
 import com.example.social_bank.demo.complaints.ComplaintView;
 import com.example.social_bank.demo.complaints.Complaints;
 import com.example.social_bank.demo.services.ServiceView;
-import com.example.social_bank.demo.services.ServicesTable;
+import com.example.social_bank.demo.services.Services_Table;
 import com.example.social_bank.demo.services.UserServiceView;
 import com.example.social_bank.demo.services.UserServices;
 import com.example.social_bank.demo.user.LoginView;
@@ -36,11 +36,46 @@ public class Controller {
     @Autowired
     Services services;
 
-    @GetMapping("/add")
-    public String add(){
-        return "success";
+    @GetMapping("/")
+    public ResponseEntity add(){
+
+        Accounts accounts = new Accounts();
+        accounts.setUser_id(-1);
+        accounts.setCredit_card_number("1122334455");
+        accounts.setBalance(1000.00);
+        accounts.setCvv(123);
+        accounts.setExp("12/25");
+
+        Accounts accounts1 = new Accounts();
+        accounts1.setUser_id(-1);
+        accounts1.setCredit_card_number("1122334466");
+        accounts1.setBalance(1000.00);
+        accounts.setCvv(123);
+        accounts.setExp("12/25");
+        Services_Table servicesTable = new Services_Table();
+        servicesTable.setDesc("desc");
+        servicesTable.setService_name("Increase Limit");
+        servicesTable.setId(1);
+
+        Services_Table servicesTable1 = new Services_Table();
+        servicesTable1.setDesc("desc");
+        servicesTable1.setService_name("Deactivate");
+        servicesTable1.setId(2);
+
+        if (services.createService(servicesTable)){
+            if (services.createService(servicesTable1)){
+                if (services.createAccount(accounts) &&  services.createAccount(accounts1)){
+                    return new ResponseEntity(new ErrorView("Success"), HttpStatus.UNAUTHORIZED);
+
+                }
+
+            }
+        }
+
+        return new ResponseEntity(new ErrorView("Error"), HttpStatus.UNAUTHORIZED);
 
     }
+
 
     @CrossOrigin(origins = "http://localhost:3001")
 
@@ -183,7 +218,7 @@ public class Controller {
     @GetMapping("/all_services")
     public ResponseEntity getServices() {
         try{
-            List<ServicesTable> servicesTables = services.getServices();
+            List<Services_Table> servicesTables = services.getServices();
             return new ResponseEntity(servicesTables, HttpStatus.OK);
         }catch(Exception e){
             return new ResponseEntity(new ErrorView("Error"), HttpStatus.FORBIDDEN);
@@ -206,7 +241,7 @@ public class Controller {
     @PostMapping("/make_service")
     public String makeService(@RequestBody ServiceView serviceView) {
         logger.info("Creating service {}", serviceView.getDesc());
-        ServicesTable userServices = new ServicesTable();
+        Services_Table userServices = new Services_Table();
         userServices.setService_name(serviceView.getName());
         userServices.setDesc(serviceView.getDesc());
 
