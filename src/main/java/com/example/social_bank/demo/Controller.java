@@ -105,6 +105,7 @@ public class Controller {
         return new ResponseEntity(new ErrorView("Error"), HttpStatus.UNAUTHORIZED);
     }
 
+    @CrossOrigin(origins = "http://localhost:3001")
     @PostMapping("/add_comment")
     public String createComment(@RequestBody CommentView commentView) {
         logger.info("Creating comment {}", commentView.getComment());
@@ -160,6 +161,7 @@ public class Controller {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:3001")
     @PostMapping("/create_account")
     public String createAccount(@RequestBody AccountView accountView) {
         logger.info("Creating user {}", accountView.getUserId());
