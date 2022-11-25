@@ -11,15 +11,25 @@ public class AccountView {
     private String name;
 
     private String cvv;
+    private String limit;
 
 
-    public AccountView(String balance, String userId, String creditCard, String exp, String name, String cvv) {
+    public String getLimit() {
+        return limit;
+    }
+
+    public void setLimit(String limit) {
+        this.limit = limit;
+    }
+
+    public AccountView(String balance, String userId, String creditCard, String exp, String name, String cvv, String limit) {
         this.balance = balance;
         this.userId = userId;
         this.creditCard = creditCard;
         this.exp = exp;
         this.name = name;
         this.cvv = cvv;
+        this.limit = limit;
     }
 
     public String getExp() {

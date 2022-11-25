@@ -45,13 +45,17 @@ public class Controller {
         accounts.setBalance(1000.00);
         accounts.setCvv(123);
         accounts.setExp("12/25");
+        accounts.setExp("100000");
 
         Accounts accounts1 = new Accounts();
         accounts1.setUser_id(-1);
         accounts1.setCredit_card_number("1122334466");
         accounts1.setBalance(1000.00);
-        accounts.setCvv(123);
-        accounts.setExp("12/25");
+        accounts1.setCvv(123);
+        accounts1.setExp("12/25");
+        accounts1.setExp("100000");
+
+
         Services_Table servicesTable = new Services_Table();
         servicesTable.setDesc("desc");
         servicesTable.setService_name("Increase Limit");
@@ -174,6 +178,7 @@ public class Controller {
         accounts.setExp(((accountView.getExp())));
         accounts.setCvv(Integer.parseInt((accountView.getCvv())));
         accounts.setName(((accountView.getName())));
+        accounts.setLimit("10000");
 
         if (acc!=null){
             accounts.setBalance(acc.getBalance()+Double.parseDouble(accountView.getBalance()));
@@ -210,7 +215,7 @@ public class Controller {
 
             Accounts acc = services.getAccounts((id));
 
-            return new ResponseEntity(new AccountView(String.valueOf(acc.getBalance()), String.valueOf(acc.getUser_id()), String.valueOf(acc.getCredit_card_number()), String.valueOf(acc.getExp()), String.valueOf(acc.getName()), String.valueOf(acc.getCvv())), HttpStatus.OK);
+            return new ResponseEntity(new AccountView(String.valueOf(acc.getBalance()), String.valueOf(acc.getUser_id()), String.valueOf(acc.getCredit_card_number()), String.valueOf(acc.getExp()), String.valueOf(acc.getName()), String.valueOf(acc.getCvv()), acc.getLimit()), HttpStatus.OK);
         }catch(Exception e){
             return new ResponseEntity(new ErrorView("Error"), HttpStatus.FORBIDDEN);
         }

@@ -28,6 +28,9 @@ public class Accounts {
     private String credit_card_number;
 
     @Column()
+    private String  limit;
+
+    @Column()
     private int cvv;
 
     @Column()
@@ -38,6 +41,14 @@ public class Accounts {
 
     public Accounts() {
 
+    }
+
+    public String getLimit() {
+        return limit;
+    }
+
+    public void setLimit(String limit) {
+        this.limit = limit;
     }
 
     public Accounts(Double balance, int user_id, String credit_card_number, int cvv, String exp, String name) {
